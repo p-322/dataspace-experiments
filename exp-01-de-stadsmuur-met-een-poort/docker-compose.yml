@@ -1,0 +1,106 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - PORT=7070
+      - HOST=0.0.0.0
+    ports:
+      - "7070:7070"
+
+  provider-db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: db-user
+      POSTGRES_PASSWORD: db-pass
+      POSTGRES_DB: db-name
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U db-user --dbname=db-name"]
+      interval: 1s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - provider-db-data:/var/lib/postgresql/data
+
+  consumer-db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: db-user
+      POSTGRES_PASSWORD: db-pass
+      POSTGRES_DB: db-name
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U db-user --dbname=db-name"]
+      interval: 1s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - consumer-db-data:/var/lib/postgresql/data
+
+  edc-provider:
+    image: ghcr.io/sovity/edc-ce:14.0.0
+    depends_on:
+      provider-db:
+        condition: service_healthy
+    environment:
+      sovity.deployment.kind: "control-plane-with-integrated-data-plane"
+      sovity.jdbc.url: "jdbc:postgresql://provider-db:5432/db-name"
+      sovity.jdbc.user: "db-user"
+      sovity.jdbc.password: "db-pass"
+      sovity.management.api.iam.kind: "management-iam-api-key"
+      edc.api.auth.key: "SomeOtherApiKey"
+      edc.participant.id: "provider"
+      edc.dsp.callback.address: "http://edc-provider:11003/api/dsp"
+      edc.dataplane.api.public.baseurl: "http://edc-provider:11005/api/public"
+      sovity.edc.title: "provider Title"
+      sovity.edc.description: "provider Description"
+      sovity.edc.maintainer.name: "provider Maintainer"
+      sovity.edc.maintainer.url: "https://provider/maintainer"
+      sovity.edc.curator.name: "provider Curator"
+      sovity.edc.curator.url: "https://provider/curator"
+      sovity.edc.fqdn.internal: "edc-provider"
+      sovity.edc.fqdn.public: "edc-provider"
+      sovity.dataspace.kind: "sovity-mock-iam"
+      sovity.http.protocol: "http://"
+      sovity.logging.level: "DEBUG"
+      sovity.print.config: "true"
+    ports:
+      - "11012:11002" # management
+      - "11013:11003" # dsp
+      - "11015:11005" # public
+
+  edc-consumer:
+    image: ghcr.io/sovity/edc-ce:14.0.0
+    depends_on:
+      consumer-db:
+        condition: service_healthy
+    environment:
+      sovity.deployment.kind: "control-plane-with-integrated-data-plane"
+      sovity.jdbc.url: "jdbc:postgresql://consumer-db:5432/db-name"
+      sovity.jdbc.user: "db-user"
+      sovity.jdbc.password: "db-pass"
+      sovity.management.api.iam.kind: "management-iam-api-key"
+      edc.api.auth.key: "SomeOtherApiKey"
+      edc.participant.id: "consumer"
+      edc.dsp.callback.address: "http://edc-consumer:11003/api/dsp"
+      edc.dataplane.api.public.baseurl: "http://edc-consumer:11005/api/public"
+      sovity.edc.title: "consumer Title"
+      sovity.edc.description: "consumer Description"
+      sovity.edc.maintainer.name: "consumer Maintainer"
+      sovity.edc.maintainer.url: "https://consumer/maintainer"
+      sovity.edc.curator.name: "consumer Curator"
+      sovity.edc.curator.url: "https://consumer/curator"
+      sovity.edc.fqdn.internal: "edc-consumer"
+      sovity.edc.fqdn.public: "edc-consumer"
+      sovity.dataspace.kind: "sovity-mock-iam"
+      sovity.http.protocol: "http://"
+      sovity.logging.level: "DEBUG"
+      sovity.print.config: "true"
+    ports:
+      - "12012:11002"
+      - "12013:11003"
+      - "12015:11005"
+
+volumes:
+  provider-db-data:
+  consumer-db-data:
