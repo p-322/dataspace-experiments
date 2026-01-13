@@ -94,12 +94,9 @@ This is the recommended command while iterating on experiments.
 
 ### Other scripts
 
-Some experiments may also define:
+Experiments may also define:
 
-- `npm run smoketest` – a quick end-to-end validation run
 - `npm run dev` – run the example API server in watch mode
-
-These are optional and experiment-specific.
 
 ## What happens during an experiment
 
