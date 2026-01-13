@@ -1,4 +1,4 @@
-# Experiment 01 — The city wall with a gate
+# Experiment 01
 
 **Hello, Connector**
 
