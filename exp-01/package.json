@@ -10,7 +10,8 @@
     "build": "tsc -p tsconfig.json",
     "clean": "docker compose down --volumes --remove-orphans",
     "init": "./scripts/start-containers.sh",
-    "smoketest": "npm run clean && npm run init && npm run build && node dist/dataspace-process/run.js"
+    "experiment": "npm run build && node dist/dataspace-process/run.js",
+    "clean-experiment": "npm run clean && npm run init && npm run experiment"
   },
   "dependencies": {
     "fastify": "^5.6.2"
