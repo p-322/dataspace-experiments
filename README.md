@@ -4,6 +4,16 @@ This repository contains a set of runnable, local experiments that demonstrate *
 
 The experiments are intentionally hands-on: you run everything locally, watch containers start, see contract negotiations finalize, and retrieve data through a controlled endpoint.
 
+## About the blog series
+
+This repository accompanies a series of blog posts published by P-322 Consultancy on dataspaces, digital heritage, and access governance.
+
+Rather than starting from policy documents or architectural diagrams, the blogs work the other way around: they begin with running code. Each experiment in this repository is used to explore a concrete question — what actually happens when data is shared under conditions, who decides, and where responsibility lives in the infrastructure.
+
+The blogs document the reasoning behind the experiments, the design choices that were made, and the things that broke along the way. They are written for people who work at the intersection of heritage, data infrastructure, and policy — not just developers, but also architects, strategists, and decision-makers who want to understand what “dataspaces” mean in practice.
+
+You can read the blogs on https://p-322.com, and follow the experiments here to reproduce, inspect, or extend them yourself. The code and the writing are meant to be read together.
+
 ## Overview
 
 Each experiment follows the same general setup:
@@ -126,3 +136,12 @@ This typically happens when you just ran an experiment, and moved on to the next
 ## License
 
 See the LICENSE file in the repository.
+
+This project is released under the GNU Affero General Public License (AGPL-3.0).
+That means you are free to use, study, modify, and share it — as long as those freedoms are preserved.
+
+If you want to use this software commercially, embed it in a proprietary product, offer it as part of a paid service, or avoid the copyleft obligations of the AGPL, we’re happy to talk.
+
+P-322 Consultancy offers commercial licensing, support, and tailored implementations for organizations that want to build on this work professionally.
+
+👉 Get in touch via https://p-322.com to discuss licensing options, architecture support, or custom development.
