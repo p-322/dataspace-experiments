@@ -96,14 +96,6 @@ exp-01
 
 ## Quick start
 
-### 1. Start the containers
-
-```bash
-./scripts/start-containers.sh
-```
-
-### 2. Run the data space process
-
 ```bash
 npm run clean-experiment
 ```
