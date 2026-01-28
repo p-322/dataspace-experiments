@@ -1,10 +1,18 @@
 {
-  "generatedAt": "2026-01-23T09:41:57.322Z",
-  "today": "2026-01-23",
+  "generatedAt": "2026-01-28T14:22:32.325Z",
+  "today": "2026-01-28",
   "published": [
     {
       "exp": "exp-01",
       "publishFrom": "2026-01-09"
+    },
+    {
+      "exp": "exp-02",
+      "publishFrom": "2026-01-28"
+    },
+    {
+      "exp": "exp-03",
+      "publishFrom": "2026-01-28"
     }
   ]
 }
